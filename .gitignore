@@ -1,1 +1,8 @@
-*.exe
+*
+
+!*.*
+
+tempCodeRunnerFile
+tempCodeRunnerFile.cpp
+
+
