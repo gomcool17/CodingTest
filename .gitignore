@@ -5,4 +5,11 @@
 tempCodeRunnerFile
 tempCodeRunnerFile.cpp
 
+others/**
+!others/*.cpp
 
+programmers/**
+!programmers/*.cpp
+
+'string, set, map'/**
+!'string, set, map'/*.cpp
