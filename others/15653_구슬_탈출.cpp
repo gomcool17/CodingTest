@@ -7,22 +7,64 @@ using namespace std;
 
 int N, M;
 char board[NM][NM];
-int cnt[NM][NM];
-bool check_red[NM][NM];
-bool check_blue[NM][NM];
-queue<pair<int, int>> rq;
-queue<pair<int, int>> bq;
+bool visit[NM][NM][NM][NM];
 
 int re = 987654321;
-int dy[4] = {0, 0, -1, 1};
-int dx[4] = {1, -1, 0, 0};
-int pre_ry = 0;
-int pre_rx = 0;
+int dir[2] = {1, -1};
+
+int rx, ry, bx, by = 0;
+
+struct INFO
+{
+    int ry, rx;
+    int by, bx;
+    int cnt;
+};
 
 void sol()
 {
+    queue<INFO> q;
+    q.push({ry, rx, by, bx, 0});
 
-   
+    while (!q.empty())
+    {
+        ry = q.front().ry;
+        rx = q.front().rx;
+        by = q.front().by;
+        bx = q.front().bx;
+        int cnt = q.front().cnt;
+        for (int d = 0; d < 2; d++)
+        {
+            int nry = ry;
+            int nrx = rx;
+            while (board[ry][nrx] != 'O' && board[ry][nrx] != '#')
+            {
+                //오른쪽 && 아래
+                nrx += dir[d];
+            }
+
+            int nby = by;
+            int nbx = bx;
+
+            while (board[ry][nrx] != 'O' && board[ry][nrx] != '#')
+            {
+                nbx += dir[d];
+            }
+
+            if(board[ry][nrx] == 'O' && board[by][nbx] != 'O')
+            {
+                re = min(cnt, re);
+            }
+            if (ry == by && nrx == nbx)
+            {
+                if (rx > bx)
+                    nbx--;
+                else
+                    nrx--;
+            }
+
+        }
+    }
 }
 
 int main()
@@ -34,13 +76,10 @@ int main()
         {
             cin >> board[i][j];
             if (board[i][j] == 'R')
-            {
-                rq.push({i, j});
-                pre_ry = i;
-                pre_rx = j;
-            }
+                ry = i, rx = j;
+
             if (board[i][j] == 'B')
-                bq.push({i, j});
+                by = i, bx = j;
         }
 
     sol();
