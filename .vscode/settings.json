@@ -16,5 +16,7 @@
         "cmath": "cpp",
         "complex": "cpp",
         "cstdlib": "cpp"
-    }
+    },
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false
 }
