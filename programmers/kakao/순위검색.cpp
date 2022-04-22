@@ -10,7 +10,7 @@ using namespace std;
 unordered_map<string, vector<int>> scores;
 
 void addCase(string* s, int score) {
-    for(int i=0;i<16;i++) {
+    for(int i=0;i<16;i++) { // -> 이거 어케 생각해내냐!!!!!
         string str = "";
         int a = i;
         for(int j=3;j>=0;j--) {
