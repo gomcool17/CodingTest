@@ -6,6 +6,10 @@
 
 using namespace std;
 
+/*
+m = "CCB"
+musicinfos = ["03:00,03:10,FOO,CCB#CCB", "04:00,04:08,BAR,ABC"]
+*/
 int N,Q;
 int board[64][64];
 vector<int> L;
