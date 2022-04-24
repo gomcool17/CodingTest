@@ -34,6 +34,7 @@ string solution(int n, int t, int m, int p) {
             if(lo == p) {
                 reverse(s.begin(), s.end());
                 answer += s[i];
+                
                 t--;
             }
             i++;
