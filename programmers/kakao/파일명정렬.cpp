@@ -5,7 +5,6 @@
 #include <iostream>
 using namespace std;
 
-unordered_map<string, int> info;
 vector<pair<pair<string, int>, pair<string,int>>> v;
 
 bool cmp(pair<pair<string, int>, pair<string,int>> a, pair<pair<string, int>, pair<string,int>> b) {
@@ -18,7 +17,6 @@ vector<string> solution(vector<string> files) {
     vector<string> answer;
     
     for(int i=0;i<files.size();i++) {
-        info[files[i]] = i;
         string name="";
         int n;
         for(int j=0;j<files[i].size();j++) {
@@ -29,15 +27,13 @@ vector<string> solution(vector<string> files) {
             }
             name += tolower(files[i][j]);
         }
-       // cout << name << " " << n << "\n";
        v.push_back({{name, n}, {files[i],i}});
     }
     
-   // sort(v.begin(), v.end(), cmp);
     stable_sort(v.begin(), v.end(), cmp); // sort말고 stable_sort 사용하니까 맞음 sort는 불안정적이라고 한다. 
+    //실제 코테에서도 생각해 내자
     for(int i=0;i<v.size();i++) {
         answer.push_back(v[i].second.first);
-      //  cout << v[i].second.first <<"\n";
     }
     return answer;
 }
