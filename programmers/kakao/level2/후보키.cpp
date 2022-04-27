@@ -1,14 +1,21 @@
 #include <string>
 #include <vector>
 #include <set>
+#include <algorithm>
 #include <iostream>
 using namespace std;
 
-// 나중에 다시 풀기@@@
+// 나중에 다시 풀기@@@ -> 다시 풀어서 맞춤!
 set<string> attributes, minimal;
 bool check[8];
 bool used[8];
+vector<vector<int>> v;
 int re;
+
+bool cmp(vector<int> v1, vector<int> v2) {
+    return (v1.size() < v2.size());
+}
+
 bool check_can(vector<vector<string>> relation, set<string> &s) {
     for(int i=0;i<relation.size();i++) {
         string str = "";
@@ -26,7 +33,9 @@ bool check_can(vector<vector<string>> relation, set<string> &s) {
             return false;
         else attributes.insert(str);
         s.insert(str);
+        if(str.size() == 0) return false;
     }
+   // if(s.size() < relation.size()) return false;
     return true;
 }
 
@@ -34,21 +43,14 @@ void candidate(int idx, vector<vector<string>>  relation, int N) {
     set<string> s;
     if(idx == N)
         return;
-
+    
     check[idx] = true;
-    if(check_can(relation,s)){     
-        for(int i=0;i<N;i++) {
-            cout << check[i] << " ";
-            if(check[i]) used[i] = true;
-        }
-        cout << "\n";
+    if(check_can(relation,s)){ 
+        vector<int> res;    
+        for(int i=0;i<N;i++)  if(check[i])  res.push_back(i);
+        
+        v.push_back(res);
         re++;
-        if(!unique(relation, s)) re--;
-
-        for(auto it = s.begin(); it != s.end(); it++) {
-            minimal.insert(*it);
-            cout << *it << "\n";
-        }
     }
     attributes.clear();
     candidate(idx + 1, relation, N);
@@ -62,16 +64,23 @@ int solution(vector<vector<string>> relation) {
     int column = relation[0].size();
     //minimal.insert({"infinfinfifnfifnifnifnfi"});
     candidate(0, relation, column);
-     
-    answer= re;
+
+    sort(v.begin(), v.end(), cmp);
+   
+    re = v.size();
+    set<int> not_c;
+    for(int i=0;i<v.size();i++) {
+        if(not_c.count(i) == 1) continue;
+        for(int j= i+1;j<v.size();j++) {
+            int cnt = 0;
+            for(int a = 0; a<v[i].size(); a++) 
+                for(int b=0;b<v[j].size();b++) if(v[i][a] == v[j][b]) cnt++;
+      
+            if(cnt == v[i].size()) not_c.insert(j);
+        }
+    }
+   
+    answer = v.size() - not_c.size();
     cout << answer << "\n";
     return answer;
-}
-int main()
-{
-   // vector<vector<string>> relation = {{"100","ryan","music","2"},{"200","apeach","math","2"},{"300","tube","computer","3"},{"400","con","computer","4"},{"500","muzi","music","3"},{"600","apeach","music","2"}};
-
-  //  vector<vector<string>> relation = {{"100", "100", "ryan", "music", "2"}, {"200", "200", "apeach", "math", "2"}, {"300", "300", "tube", "computer", "3"}, {"400", "400", "con", "computer", "4"}, {"500", "500", "muzi", "music", "3"}, {"600", "600", "apeach", "music", "2"}};
-    vector<vector<string>> relation = { {"a","1","aaa","c","ng"},{"a","1","bbb","e","g"},{"c","1","aaa","d","ng"},{"d","2","bbb","d","ng"}};
-    solution(relation);
 }
