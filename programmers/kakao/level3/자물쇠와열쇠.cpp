@@ -23,37 +23,23 @@ void rotate(vector<vector<int>> &key) {
 
 bool check_unlock(vector<vector<int>> key, vector<vector<int>> lock, int idx, int jdx) {
     if(jdx > e) {
-       // cout << "idx plus\n";
         return check_unlock(key,lock,idx+1, 0);
     }
 
     if(idx > e) return false;
-   // cout << idx << " " << jdx << "\n";
+
     int s = key.size();
     int y = 0;
     int cnt = 0;
-
-   /* for(int i=idx; i<idx+s;i++) {
-        for(int j=jdx;j<jdx+s;j++) {
-            cout << map[i][j] << " ";
-        }
-        cout << "\n";
-    }
-    cout << "\n";*/
 
     for(int i=idx; i<idx+s;i++) {
         int x =0;
         for(int j=jdx;j<jdx+s;j++) {
             if(i < start || i > e || j < start || j > e) {
-               // cout << "onono\n";
                 x++;
                 continue;
             }
-
-       //     if(idx == 3 && jdx == 3)
-         //       cout << y << " " << x << " " << i << " " << j <<  " " << key[y][x] << " " << map[i][j] << "\n";
             if(key[y][x] == 1 && map[i][j] == 1){
-                //cout << "can't unlock\n";
                 return check_unlock(key,lock,idx,jdx+1);
             }
 
@@ -70,7 +56,6 @@ bool check_unlock(vector<vector<int>> key, vector<vector<int>> lock, int idx, in
 bool find_unlock(vector<vector<int>> key, vector<vector<int>> lock) {
 
     for(int i=0;i<4;i++) {
-        cout << "===== " << i << " =======\n";
         if(check_unlock(key,lock,0,0)) return true;
         rotate(key);
     }
@@ -100,24 +85,6 @@ bool solution(vector<vector<int>> key, vector<vector<int>> lock) {
         for(int j =k;j < s;j++) 
             map[i][j] = lock[i-k][j-k];
 
-     for(int i=0;i < MN;i++) {
-        for(int j =0;j < MN;j++) 
-            cout << map[i][j] << " ";
-            cout << "\n";
-     }
-     cout << "\n";
-    cout << start << " " << e << "\n";
     answer = find_unlock(key, lock);
     return answer;
-}
-
-int main()
-{
-    vector<vector<int>> key = {{0,0,0,0},{1,0,0,0},{0,1,1,0}, {0,0,0,0}};
-    vector<vector<int>> lock = {{1,1,1,0,1},{1,1,0,1,0},{1,0,1,0,0}, {0,0,0,1,1},{0,0,0,1,1}};
-    cout << solution(key,lock);
-
- /*   vector<vector<int>> key = {{0,0,0},{1,0,0},{0,1,1}};
-    vector<vector<int>> lock = {{1,1,0},{1,1,1},{1,1,1}};
-    cout << solution(key,lock);*/
 }
