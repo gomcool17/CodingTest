@@ -1,22 +1,27 @@
 #include <vector>
+#include <stack>
 #include <iostream>
 
 using namespace std;
 
-int ans[5000001];
 int main() {
-    vector<int> v;
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    stack<pair<int,int>> st;
     int N; cin>>N;
     for(int i=0;i<N;i++) {
         int n;cin>>n;
-        v.push_back(n);
-    }
-    ans[1] = 0;
-    for(int i=2;i<=N;i++) {
-        if(v[i] > v[i-1]) ans[i] = ans[i-1];
-        else ans[i] = i-1;
-    }
+        
+        while(!st.empty()) {
+            if(st.top().first > n) {
+                cout << st.top().second << " ";
+                break;
+            }
+            st.pop();
+        }
 
-    for(int i=1;i<=N;i++) cout << ans[i] << " ";
-
+        if(st.empty()) cout << 0 << " ";
+        st.push({n, i+1});
+    }
 }
