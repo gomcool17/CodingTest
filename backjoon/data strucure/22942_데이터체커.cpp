@@ -5,28 +5,38 @@
 using namespace std;
 
 int N;
-vector<pair<int,int>> v;
+struct INFO
+{
+    int num,lo;
+    string info;
+};
+vector<INFO> v;
 
-bool cmp(pair<int,int> a, pair<int,int> b) {
-    return a.first > b.first;
-}   
+bool cmp(INFO a, INFO b) {
+    return a.num < b.num;
+}
 
 bool sol() {
-    stack<pair<int,int>> st;
+    stack<INFO> st;
     for(int i=0;i<v.size();i++) {
-        if(st.empty()) {
-            st.push({v[i].first, v[i].second}); continue;
+        if(v[i].info == "start") st.push(v[i]);
+        else {
+            if(st.top().lo == v[i].lo) st.pop();
+            else {
+                return false;
+            }
         }
-        
-    }
+    }   
+
+    return true;
 }
 int main() {
     cin >> N;
     for(int i=0;i<N;i++) {
         int d,r; cin>>d>>r;
-        v.push_back({r,d});
+        v.push_back({d-r,i,"start"});
+        v.push_back({d+r,i,"end"});
     }
     sort(v.begin(), v.end(), cmp);
-    for(int i=0;i<v.size();i++) cout << v[i].first << " " << v[i].second << "\n";
-   
+    cout << ((sol()) ? "YES\n" : "NO\n");
 }
