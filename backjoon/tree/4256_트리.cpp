@@ -9,7 +9,6 @@ int r;
 void sol(int start, int end) {
     int n = r;
     int lo = -1;
-   // if(r == N) return;
     if(start >= end) {
         return;
     }
