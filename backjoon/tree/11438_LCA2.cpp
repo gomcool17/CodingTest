@@ -54,7 +54,7 @@ int main() {
             dp[i][j] = dp[i-1][dp[i-1][j]];
         }
     }
-
+   
     int M; cin>>M;
 
     while(M--) {
