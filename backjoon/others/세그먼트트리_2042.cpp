@@ -1,4 +1,5 @@
 // 세그먼트 트리 연습
+// 구간합구하기
 #include <iostream>
 #include <vector>
 #include <cmath>
