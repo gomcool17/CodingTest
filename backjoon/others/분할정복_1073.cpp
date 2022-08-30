@@ -2,6 +2,7 @@
 // Z
 #include <iostream>
 #include <cmath>
+#include <cstdlib>
 using namespace std;
 
 const int MN = 32769;
@@ -10,15 +11,12 @@ int N,r,c;
 long long cnt;
 long long ans;
 void divide(int y, int x, int size) {
-    if(size == 2) {
-        if(y <= r && r < y+size && x <= c && c < x+size) {
-            if(x < c) ans++;
-            if(y < r) ans++;
-            if(y < r && x < c) ans++;
-            ans += cnt;
-            cout << ans << "\n";
-        }
-        cnt += 4;
+    if(!(y <= r && r < y+size && x <= c && c < x+size)) {
+        ans += size * size;
+        return;
+    }
+    if(y==r && x == c) {
+        cout << ans << "\n";
         return;
     }
     divide(y, x, size/2);
