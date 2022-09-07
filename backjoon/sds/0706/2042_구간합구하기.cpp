@@ -45,6 +45,8 @@ int main() {
     int tree_size = (1<<(tree_h+1));
     segment.reserve(tree_size);
     make_segment_tree(1,0,N-1);
+    for(int i=1;i<=tree_size;i++) cout << segment[i] << " ";
+    cout << "\n";
     M += K;
     while (M--)
     {
